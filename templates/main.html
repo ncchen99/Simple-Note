@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello,
+        world !</title>
+    <link rel="stylesheet" href="/static/css/custom.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <form action="/" method="post">
+                <div>ฅ ฅ 趕快記下來!</div>
+                <div><input type="text" name="message" />
+                    <input type="submit" value="(◍•ᴗ•◍)" />
+                </div>
+            </form>
+        </div>
+
+        <div class="row">
+            {% if data != undefined %}
+            <div>(๑• . •๑) 我の記事本</div>
+            {% for item in data %}
+            <div class="flex-container">
+                <div class="content">{{item[1]}}</div>
+                <div class="symbol"> <a href="/delete/{{item[0]}}"><i class="fa-solid fa-xmark"></i> </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    </div>
+    <script src="https://kit.fontawesome.com/02b9e5fc29.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
