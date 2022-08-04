@@ -1,8 +1,7 @@
-
-import os
 from flask import Flask, request, render_template, redirect, url_for
 from flask_mysqldb import MySQL
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 app = Flask(__name__)
@@ -22,10 +21,11 @@ def home():
     if request.method == 'POST':
         message = request.form['message']
         cur.execute(
-            f"""INSERT INTO `note`.`note` (`message`) VALUES ('{message}')""")
+            "INSERT INTO `note`.`note` (`message`) VALUES (%s)", [message])
         mysql.connection.commit()
-    cur.execute("""SELECT id, message FROM `note`.`note`""")
+    cur.execute("""SELECT `id`, `message` FROM `note`.`note`""")
     rv = cur.fetchall()
+    print(rv)
     data = [[rv[i][0], rv[i][1]] for i in range(len(rv))]
     return render_template('main.html', data=data)
 
@@ -34,7 +34,7 @@ def home():
 def delete(id):
     cur = mysql.connection.cursor()
     cur.execute(
-        f"""DELETE FROM `note`.`note` WHERE id='{id}'""")
+        "DELETE FROM `note`.`note` WHERE `id`= %s", [id])
     mysql.connection.commit()
     return redirect(url_for("home"))
 
